@@ -98,12 +98,9 @@ if (Meteor.isClient) {
       event.target.className = 'tile';
     }
 
-    var target = event.target.querySelector('.tile-info');
-    if (target !== null) {
-      target.remove();
-    } else {
-      Blaze.renderWithData(Template.tileInfo, {}, event.target);
-    }
+    $('.tile-info').remove();
+    Blaze.renderWithData(Template.tileInfo, {}, event.target);
+
 
   }, adjustScroll = function (delta) {
     var target = $(window);
