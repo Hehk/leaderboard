@@ -58,7 +58,7 @@
 </template>
 
 <template name="tile">
-  <div class="tile">
+  <div class="tile" id="{{id}}">
     <div class="name no-interact">
       <div class="user-name">
         {{userName}}
@@ -77,5 +77,11 @@
         {{winRate}}%
       </div>
     </div>
+  </div>
+</template>
+
+<template name="tileInfo">
+  <div class="tile-info no-interact">
+    Hello World
   </div>
 </template>

@@ -58,6 +58,7 @@ body {
 }
 
 .content {
+  margin-bottom: 100px;
   h1, .tile, .menu {
     width: 1000px;
     margin: auto;
@@ -112,7 +113,7 @@ body {
   }
 
   .tile {
-    height: 50px;
+    height: auto;
     line-height: 50px;
     font-size: 18px;
     background-color: $primary-color-text;
@@ -161,6 +162,11 @@ body {
           color: $secondary-text-color;
         }
       }
+    }
+
+    .tile-info {
+      margin: 10px;
+      border-top: 1px $divider-color solid;
     }
 
     .no-interact {
