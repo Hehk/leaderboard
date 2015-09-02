@@ -1,19 +1,117 @@
 if (Meteor.isClient) {
-  // counter starts at 0
-  Session.setDefault('counter', 0);
-
-  Template.hello.helpers({
-    counter: function () {
-      return Session.get('counter');
+  var tileClick = function (event) {
+    if (event.target.className === 'tile') {
+      $('.tile.selected').removeClass('selected').removeClass('first');
+      if (event.target.parentElement.firstElementChild === event.target) {
+        event.target.className = 'tile selected first';
+      } else {
+        event.target.className = 'tile selected';
+      }
+    } else {
+      event.target.className = 'tile';
     }
+  };
+
+  Template.header.helpers({
+    options: ['Favorites', 'General']
   });
 
-  Template.hello.events({
-    'click button': function () {
-      // increment the counter when button is clicked
-      Session.set('counter', Session.get('counter') + 1);
-    }
+  Template.favorites.helpers({
+    players: [{
+      userName: 'Hehk.8888',
+      charName: 'Riggity Rekt',
+      rank: 420,
+      winRate: 69.69
+    },{
+      userName: 'Hehk.8888',
+      charName: 'Riggity Rekt',
+      rank: 420,
+      winRate: 69.69
+    },{
+      userName: 'Hehk.8888',
+      charName: 'Riggity Rekt',
+      rank: 420,
+      winRate: 69.69
+    }]
   });
+
+  Template.favorites.events({
+    'click .tile' : tileClick
+  });
+
+  Template.general.helpers({
+    players: [{
+      userName: 'Hehk.8888',
+      charName: 'Riggity Rekt',
+      rank: 420,
+      winRate: 69.69
+    },{
+      userName: 'Hehk.8888',
+      charName: 'Riggity Rekt',
+      rank: 420,
+      winRate: 69.69
+    },{
+      userName: 'Hehk.8888',
+      charName: 'Riggity Rekt',
+      rank: 420,
+      winRate: 69.69
+    },{
+      userName: 'Hehk.8888',
+      charName: 'Riggity Rekt',
+      rank: 420,
+      winRate: 69.69
+    },{
+      userName: 'Hehk.8888',
+      charName: 'Riggity Rekt',
+      rank: 420,
+      winRate: 69.69
+    },{
+      userName: 'Hehk.8888',
+      charName: 'Riggity Rekt',
+      rank: 420,
+      winRate: 69.69
+    },{
+      userName: 'Hehk.8888',
+      charName: 'Riggity Rekt',
+      rank: 420,
+      winRate: 69.69
+    },{
+      userName: 'Hehk.8888',
+      charName: 'Riggity Rekt',
+      rank: 420,
+      winRate: 69.69
+    },{
+      userName: 'Hehk.8888',
+      charName: 'Riggity Rekt',
+      rank: 420,
+      winRate: 69.69
+    },{
+      userName: 'Hehk.8888',
+      charName: 'Riggity Rekt',
+      rank: 420,
+      winRate: 69.69
+    },{
+      userName: 'Hehk.8888',
+      charName: 'Riggity Rekt',
+      rank: 420,
+      winRate: 69.69
+    },{
+      userName: 'Hehk.8888',
+      charName: 'Riggity Rekt',
+      rank: 420,
+      winRate: 69.69
+    },{
+      userName: 'Hehk.8888',
+      charName: 'Riggity Rekt',
+      rank: 420,
+      winRate: 69.69
+    }]
+  });
+
+  Template.general.events({
+    'click .tile' : tileClick
+  });
+
 }
 
 if (Meteor.isServer) {

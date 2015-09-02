@@ -1,0 +1,170 @@
+/* app colors */
+
+$primary-color-dark:   #D32F2F;
+$primary-color:        #F44336;
+$primary-color-light:  #FFCDD2;
+$primary-color-text:   #FFFFFF;
+$accent-color:         #FF5722;
+$primary-text-color:   #212121;
+$secondary-text-color: #727272;
+$divider-color:        #D6D6D6;
+
+body {
+  font-family: 'Abel';
+  margin: 0;
+  color: $primary-text-color;
+  background-color: #eeeeee;
+}
+
+.header {
+  $height: 60px;
+  height: $height;
+  line-height: $height;
+  font-size: 24px;
+  font-weight: bold;
+
+  color: $primary-color-text;
+  background-color: $primary-color;
+  box-shadow: 0 1px 10px $secondary-text-color;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+
+  .title {
+    margin-left: 10px;
+    float: left;
+  }
+
+  .nav-options {
+    display: flex;
+    justify-content: flex-end;
+
+    div {
+      margin: 5px;
+      padding: 0 10px 0 10px;
+
+      height: $height - 10px;
+      line-height: $height - 10px;
+      border-radius: 5px;
+
+      &:hover{
+        background-color: $primary-color-dark;
+      }
+    }
+  }
+}
+
+.content {
+  h1, .tile, .menu {
+    width: 1000px;
+    margin: auto;
+  }
+
+  .menu {
+    height: 50px;
+    line-height: 50px;
+    margin-top: 15px;
+
+    &:first-child {
+      margin-top: 70px;
+    }
+
+    .title {
+      font-weight: bold;
+      float: left;
+      font-size: 24px;
+      margin-left: 10px;
+    }
+    .nav {
+      display: flex;
+      justify-content: flex-end;
+      font-size: 18px;
+
+      .prev, .next {
+          height: 30px;
+          line-height: 30px;
+          margin: 10px 0 10px 10px;
+          padding: 0 10px 0 10px;
+          background-color: $primary-color;
+          box-shadow: 0 1px 2px $secondary-text-color;
+          color: $primary-color-text;
+
+          &:hover {
+            background-color: $primary-color-dark;
+          }
+
+          &.inactive {
+            background-color: $primary-color-light;
+            &:hover {
+              background-color: $primary-color-light;
+            }
+          }
+      }
+    }
+  }
+
+  h1 {
+    padding: 20px 0 10px 10px;
+    font-size: 24px;
+  }
+
+  .tile {
+    height: 50px;
+    line-height: 50px;
+    font-size: 18px;
+    background-color: $primary-color-text;
+    border-bottom: 1px solid $divider-color;
+    box-shadow: 0 1px 2px $secondary-text-color;
+    border-left: 2px solid rgba(0,0,0,0);
+
+    &:hover {
+      border-left: 2px solid $primary-color;
+    }
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &.selected {
+      width: 1050px;
+      margin: 20px auto 20px auto;
+      border-left: 2px solid $primary-color;
+
+      /* first-child does not work :( */
+      &.first {
+        margin-top: 0;
+      }
+    }
+
+    .name {
+      .user-name, .char-name {
+        float: left;
+      }
+      .user-name {
+        width: 150px;
+        margin-left: 10px;
+      }
+      .char-name {
+        color: $accent-color;
+      }
+    }
+    .data {
+      display: flex;
+      justify-content: flex-end;
+
+      div {
+        margin: 0 10px 0 10px;
+
+        span {
+          color: $secondary-text-color;
+        }
+      }
+    }
+
+    .no-interact {
+      pointer-events: none;
+    }
+  }
+}
