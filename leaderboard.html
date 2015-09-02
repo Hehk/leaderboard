@@ -28,32 +28,32 @@
 </template>
 
 <template name="favorites">
-  <div class="menu">
+  {{#if isPopulated}}
+  <div class="menu" id="favorites">
     <div class="title">Favorites</div>
-    <div class="nav">
-      <div class="prev inactive">Prev</div>
-      <div class="next">Next</div>
-    </div>
   </div>
   <div class="tiles">
     {{#each players}}
       {{> tile}}
     {{/each}}
   </div>
+  {{/if}}
 </template>
 
 <template name="general">
-  <div class="menu">
-    <div class="title">Leaderboard</div>
-    <div class="nav">
-      <div class="prev inactive">Prev</div>
-      <div class="next">Next</div>
+  <div id="general">
+    <div class="menu">
+      <div class="title">Leaderboard</div>
+      <div class="nav">
+        <div class="prev">Prev</div>
+        <div class="next">Next</div>
+      </div>
     </div>
-  </div>
-  <div class="tiles">
-    {{#each players}}
-      {{> tile}}
-    {{/each}}
+    <div class="tiles">
+      {{#each players}}
+        {{> tile}}
+      {{/each}}
+    </div>
   </div>
 </template>
 
@@ -82,6 +82,6 @@
 
 <template name="tileInfo">
   <div class="tile-info no-interact">
-    Hello World
+
   </div>
 </template>

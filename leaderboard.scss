@@ -167,6 +167,11 @@ body {
     .tile-info {
       margin: 10px;
       border-top: 1px $divider-color solid;
+
+      .timeline {
+        background-color: red;
+        height: 60px;
+      }
     }
 
     .no-interact {
