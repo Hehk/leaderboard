@@ -14,6 +14,7 @@ body {
   margin: 0;
   color: $primary-text-color;
   background-color: #eeeeee;
+  z-index: 0;
 }
 
 .header {
@@ -79,30 +80,91 @@ body {
       font-size: 24px;
       margin-left: 10px;
     }
+
     .nav {
       display: flex;
       justify-content: flex-end;
       font-size: 18px;
 
       .prev, .next {
+        height: 30px;
+        line-height: 30px;
+        margin: 10px 0 10px 10px;
+        padding: 0 10px 0 10px;
+        background-color: $primary-color;
+        box-shadow: 0 1px 2px $secondary-text-color;
+        color: $primary-color-text;
+
+        &:hover {
+          background-color: $primary-color-dark;
+        }
+
+        &.inactive {
+          background-color: $primary-color-light;
+          &:hover {
+            background-color: $primary-color-light;
+          }
+        }
+      }
+
+      .sort-by {
+        color: $primary-color-text;
+
+        .sort-by-title {
           height: 30px;
           line-height: 30px;
-          margin: 10px 0 10px 10px;
+          margin: 10px 10px 0 10px;
           padding: 0 10px 0 10px;
           background-color: $primary-color;
           box-shadow: 0 1px 2px $secondary-text-color;
-          color: $primary-color-text;
+          margin-right: 20px;
+
+          &:after {
+            content: "";
+            width: 0;
+          	height: 0;
+            margin: 15px 0 0 10px;
+            float: right;
+          	border-left: 5px solid transparent;
+          	border-right: 5px solid transparent;
+          	border-top: 5px solid $primary-color-text;
+          }
+        }
+        ul {
+          z-index: -1;
+          pointer-events: none;
+          margin: 0;
+          padding: 5px;
+          position: relative;
+          left: 10px;
+          color: none;
+          background: none;
+          list-style: none;
+        }
+
+        li {
+          line-height: 30px;
+          padding: 5px;
+          margin-bottom: 5px;
+          border-radius: 5px;
+
+          &:last-child {
+            margin-bottom: 0px;
+          }
 
           &:hover {
-            background-color: $primary-color-dark;
+            background-color: $accent-color;
           }
-
-          &.inactive {
-            background-color: $primary-color-light;
-            &:hover {
-              background-color: $primary-color-light;
-            }
+        }
+        &:hover {
+          ul {
+            z-index: 1;
+            pointer-events: auto;
+            color: $primary-text-color;
+            background: $primary-color-text;
+            box-shadow: 0 1px 2px $secondary-text-color;
           }
+        }
       }
     }
   }
