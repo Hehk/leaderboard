@@ -17,14 +17,14 @@ function filterPlayers (players, length, offset) {
 
 players = (function () {
   var players = [],
-      count= 50;
+      count = 1000;
 
   for (var i = 0; i < count ; i++) {
     players.push({
       userName: 'test.8888',
       charName: i.toString(),
       rank: i,
-      winRate: 69.69,
+      winRate: 70 - i,
       selId: generateID()
     });
   }
@@ -34,7 +34,7 @@ players = (function () {
 
 if (Meteor.isClient) {
   var generalTilesSettings = {
-    length: 5,
+    length: 20,
     offset: 0,
     prevActive: function () {
       var target = $('#general').find('.prev');
@@ -51,7 +51,8 @@ if (Meteor.isClient) {
       } else {
         target.addClass('inactive');
       }
-    }
+    },
+    sort: {}
   };
   var tileClick = function (event) {
     $('.tile-info').remove();
@@ -98,6 +99,58 @@ if (Meteor.isClient) {
     generalTilesSettings.nextActive();
     $('.tile-info').remove();
     $('#general').find('.tile').removeClass('selected');
+  }, sortGeneral = function (option) {
+    var sortFn = null,
+        targets = $('.prefix').removeClass('selected');
+
+    switch (option) {
+      case 'rank':
+        if (generalTilesSettings.sort.by === 'rank' && generalTilesSettings.sort.direction === 'up') {
+          sortFn = function (a, b) {
+            return b.rank - a.rank;
+          };
+          generalTilesSettings.sort = {
+            by: 'rank',
+            direction: 'down'
+          };
+        } else {
+          sortFn = function (a, b) {
+            return a.rank - b.rank;
+          };
+          generalTilesSettings.sort = {
+            by: 'rank',
+            direction: 'up'
+          };
+        }
+        targets.filter('.rank').addClass('selected');
+
+        break;
+      case 'win-rate':
+        if (generalTilesSettings.sort.by === 'win-rate' && generalTilesSettings.sort.direction === 'up') {
+          sortFn = function (a, b) {
+            return b.winRate - a.winRate;
+          };
+          generalTilesSettings.sort = {
+            by: 'win-rate',
+            direction: 'down'
+          };
+        } else {
+          sortFn = function (a, b) {
+            return a.winRate - b.winRate;
+          };
+          generalTilesSettings.sort = {
+            by: 'win-rate',
+            direction: 'up'
+          };
+        }
+
+        targets.filter('.win-rate').addClass('selected');
+        break;
+    }
+    if (sortFn !== null) {
+      players.sort(sortFn);
+      Session.set('generalPlayers', filterPlayers(players, generalTilesSettings.length));
+    }
   };
 
   Session.set('favorites', []);
@@ -121,7 +174,6 @@ if (Meteor.isClient) {
             content.push(players[player]);
         }
       }
-      console.log('sdfsdf')
       return content;
     }
   });
@@ -140,7 +192,7 @@ if (Meteor.isClient) {
 
   Template.general.events({
     'click .next' : function (event) {
-      if (generalTilesSettings.offset < players.length) {
+      if (generalTilesSettings.offset + generalTilesSettings.length < players.length) {
         generalTilesSettings.offset = generalTilesSettings.offset + generalTilesSettings.length;
         reloadData();
       }
@@ -152,16 +204,25 @@ if (Meteor.isClient) {
       }
     },
     'click .tile' : tileClick,
-    'click .favorite-button' : favoriteClick
+    'click .favorite-button' : favoriteClick,
+    'click .sort-option' : function (event) {
+      sortGeneral(event.target.innerText);
+    },
+    'click .prefix' : function (event) {
+      sortGeneral(event.target.getAttribute('value'));
+      event.stopPropagation();
+    }
   });
 
   Template.general.rendered = function () {
     generalTilesSettings.prevActive();
     generalTilesSettings.nextActive();
+    sortGeneral('rank')
 
     Tracker.autorun(function () {
       var players = Session.get('generalPlayers'),
           favorites = Session.get('favorites');
+
       Tracker.afterFlush(function () {
         players.forEach(function (player) {
           if (favorites.indexOf(player.selId) !== -1) {
