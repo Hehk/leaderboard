@@ -140,12 +140,24 @@ body {
     }
 
     .name {
-      .user-name, .char-name {
+      .user-name, .char-name, .favorite-button {
         float: left;
+        &:first-child {
+          margin-left: 10px;
+        }
+      }
+      .favorite-button {
+        margin-right: 10px;
+        color: $divider-color;
+        line-height: 50px;
+        pointer-events: auto;
+
+        &.selected {
+          color: $accent-color;
+        }
       }
       .user-name {
         width: 150px;
-        margin-left: 10px;
       }
       .char-name {
         color: $accent-color;

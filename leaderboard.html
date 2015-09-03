@@ -1,5 +1,6 @@
 <head>
   <link href='https://fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
   <title>leaderboard</title>
 </head>
@@ -29,14 +30,16 @@
 
 <template name="favorites">
   {{#if isPopulated}}
-  <div class="menu" id="favorites">
-    <div class="title">Favorites</div>
-  </div>
-  <div class="tiles">
-    {{#each players}}
-      {{> tile}}
-    {{/each}}
-  </div>
+    <div id="favorites">
+      <div class="menu" id="favorites">
+        <div class="title">Favorites</div>
+      </div>
+      <div class="tiles">
+        {{#each players}}
+          {{> tileFavorite}}
+        {{/each}}
+      </div>
+    </div>
   {{/if}}
 </template>
 
@@ -51,15 +54,40 @@
     </div>
     <div class="tiles">
       {{#each players}}
-        {{> tile}}
+        {{> tileGeneral}}
       {{/each}}
     </div>
   </div>
 </template>
 
-<template name="tile">
-  <div class="tile" id="{{id}}">
+<template name="tileGeneral">
+  <div class="tile">
     <div class="name no-interact">
+      <div class="favorite-button fa fa-star-o" sel-id="{{selId}}"></div>
+      <div class="user-name">
+        {{userName}}
+      </div>
+      <div class="char-name">
+        {{charName}}
+      </div>
+    </div>
+    <div class="data no-interact">
+      <div class="rank">
+        <span class="prefix">Rank: </span>
+        {{rank}}
+      </div>
+      <div>
+        <span class="prefix">Win Rate: </span>
+        {{winRate}}%
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="tileFavorite">
+  <div class="tile">
+    <div class="name no-interact">
+      <div class="favorite-button selected fa fa-star" sel-id="{{selId}}"></div>
       <div class="user-name">
         {{userName}}
       </div>

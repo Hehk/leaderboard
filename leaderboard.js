@@ -15,85 +15,22 @@ function filterPlayers (players, length, offset) {
   return players.slice(offset, offset + length);
 }
 
-var players = [{
-  userName: 'Hehk.8888',
-  charName: '1',
-  rank: 420,
-  winRate: 69.69,
-  id: generateID()
-},{
-  userName: 'Hehk.8888',
-  charName: '2',
-  rank: 420,
-  winRate: 69.69,
-  id: generateID()
-},{
-  userName: 'Hehk.8888',
-  charName: '3',
-  rank: 420,
-  winRate: 69.69,
-  id: generateID()
-},{
-  userName: 'Hehk.8888',
-  charName: '4',
-  rank: 420,
-  winRate: 69.69,
-  id: generateID()
-},{
-  userName: 'Hehk.8888',
-  charName: '5',
-  rank: 420,
-  winRate: 69.69,
-  id: generateID()
-},{
-  userName: 'Hehk.8888',
-  charName: '6',
-  rank: 420,
-  winRate: 69.69,
-  id: generateID()
-},{
-  userName: 'Hehk.8888',
-  charName: '7',
-  rank: 420,
-  winRate: 69.69,
-  id: generateID()
-},{
-  userName: 'Hehk.8888',
-  charName: '8',
-  rank: 420,
-  winRate: 69.69,
-  id: generateID()
-},{
-  userName: 'Hehk.8888',
-  charName: '9',
-  rank: 420,
-  winRate: 69.69,
-  id: generateID()
-},{
-  userName: 'Hehk.8888',
-  charName: '10',
-  rank: 420,
-  winRate: 69.69,
-  id: generateID()
-},{
-  userName: 'Hehk.8888',
-  charName: '11',
-  rank: 420,
-  winRate: 69.69,
-  id: generateID()
-},{
-  userName: 'Hehk.8888',
-  charName: '12',
-  rank: 420,
-  winRate: 69.69,
-  id: generateID()
-},{
-  userName: 'Hehk.8888',
-  charName: '13',
-  rank: 420,
-  winRate: 69.69,
-  id: generateID()
-}];
+players = (function () {
+  var players = [],
+      count= 50;
+
+  for (var i = 0; i < count ; i++) {
+    players.push({
+      userName: 'test.8888',
+      charName: i.toString(),
+      rank: i,
+      winRate: 69.69,
+      selId: generateID()
+    });
+  }
+
+  return players;
+})();
 
 if (Meteor.isClient) {
   var generalTilesSettings = {
@@ -138,6 +75,29 @@ if (Meteor.isClient) {
   }, adjustScroll = function (delta) {
     var target = $(window);
     target.scrollTop(target.scrollTop() + delta);
+  }, favoriteClick = function (event) {
+    var favorites = Session.get('favorites'),
+        id = event.target.getAttribute('sel-id');
+
+    if (favorites.indexOf(id) === -1) {
+      favorites.push(id);
+      adjustScroll(50);
+    } else {
+      favorites.splice(favorites.indexOf(id), 1);
+      adjustScroll(-50);
+    }
+
+    Session.set('favorites', favorites);
+    event.stopPropagation();
+  }, reloadData = function () {
+    var filteredPlayers = filterPlayers(players, generalTilesSettings.length, generalTilesSettings.offset),
+        favorites = Session.get('favorites');
+    Session.set('generalPlayers', filteredPlayers);
+
+    generalTilesSettings.prevActive();
+    generalTilesSettings.nextActive();
+    $('.tile-info').remove();
+    $('#general').find('.tile').removeClass('selected');
   };
 
   Session.set('favorites', []);
@@ -156,18 +116,19 @@ if (Meteor.isClient) {
 
       for (var player in players) {
         if (players.hasOwnProperty(player) &&
-            favorites.indexOf(players[player].id) !== -1)
+            favorites.indexOf(players[player].selId) !== -1)
         {
             content.push(players[player]);
         }
       }
-
+      console.log('sdfsdf')
       return content;
     }
   });
 
   Template.favorites.events({
-    'click .tile' : tileClick
+    'click .tile' : tileClick,
+    'click .favorite-button' : favoriteClick
   });
 
   Session.set('generalPlayers', filterPlayers(players, generalTilesSettings.length));
@@ -181,47 +142,40 @@ if (Meteor.isClient) {
     'click .next' : function (event) {
       if (generalTilesSettings.offset < players.length) {
         generalTilesSettings.offset = generalTilesSettings.offset + generalTilesSettings.length;
-        Session.set('generalPlayers', filterPlayers(players, generalTilesSettings.length, generalTilesSettings.offset));
+        reloadData();
       }
-
-      generalTilesSettings.prevActive();
-      generalTilesSettings.nextActive();
-      $('.tile-info').remove();
-      $('#general').find('.tile').removeClass('selected');
     },
     'click .prev' : function (event) {
       if (generalTilesSettings.offset > 0) {
         generalTilesSettings.offset = generalTilesSettings.offset - generalTilesSettings.length;
-        Session.set('generalPlayers', filterPlayers(players, generalTilesSettings.length, generalTilesSettings.offset));
+        reloadData();
       }
-
-      generalTilesSettings.prevActive();
-      generalTilesSettings.nextActive();
-      $('.tile-info').remove();
-      $('#general').find('.tile').removeClass('selected');
     },
-    'click .tile' : function (event) {
-      var favorites = Session.get('favorites'),
-          id = event.target.getAttribute('id');
-
-      if (favorites.indexOf(id) === -1) {
-        favorites.push(id);
-        adjustScroll(50);
-      } else {
-        favorites.splice(favorites.indexOf(id), 1);
-        adjustScroll(-50);
-      }
-
-      Session.set('favorites', favorites);
-      tileClick(event);
-    }
+    'click .tile' : tileClick,
+    'click .favorite-button' : favoriteClick
   });
 
   Template.general.rendered = function () {
     generalTilesSettings.prevActive();
     generalTilesSettings.nextActive();
-  };
 
+    Tracker.autorun(function () {
+      var players = Session.get('generalPlayers'),
+          favorites = Session.get('favorites');
+      Tracker.afterFlush(function () {
+        players.forEach(function (player) {
+          if (favorites.indexOf(player.selId) !== -1) {
+            $('[sel-id="' + player.selId + '"]').removeClass('fa-star-o')
+              .addClass('fa-star selected');
+          } else {
+            $('[sel-id="' + player.selId + '"]').removeClass('fa-star')
+              .removeClass('selected')
+              .addClass('fa-star-o');
+          }
+        });
+      });
+    });
+  };
 }
 
 if (Meteor.isServer) {
