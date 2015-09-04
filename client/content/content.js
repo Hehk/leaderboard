@@ -20,6 +20,10 @@ players = (function () {
 })();
 
 if (Meteor.isClient) {
+  // ---------------------------------------------------------------------------
+  // GENERIC FUNCTIONS USED IN BOTH GENERAL AND FAVORITES ----------------------
+  // ---------------------------------------------------------------------------
+
   // renders a timline at the target
   var renderTimeline = function (target) {
     console.log(target);
