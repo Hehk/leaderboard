@@ -121,7 +121,8 @@ if (Meteor.isClient) {
 
   Template.general.rendered = function () {
     reloadNextPrev();
-
+    sortGeneral('rank');
+    
     Tracker.autorun(function () {
       var players = Session.get('generalPlayers'),
           favorites = Session.get('favorites');

@@ -97,8 +97,9 @@
         "Tracker" : false,
 
         "$" : false,
+        "d3" : false,
 
-        "contentUtils" : false,
-        "players" : false
+        "contentUtils" : true,
+        "players" : true
       }
 }

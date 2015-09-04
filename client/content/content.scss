@@ -134,8 +134,34 @@
       border-top: 1px $divider-color solid;
 
       .timeline {
-        background-color: red;
-        height: 60px;
+        height: 300px;
+
+        path {
+  				stroke: $accent-color;
+  				stroke-width: 2;
+  				fill: none;
+  			}
+
+  			.axis {
+  			  shape-rendering: crispEdges;
+  			}
+
+  			.x.axis line {
+  			  stroke: lightgrey;
+  			}
+
+  			.x.axis .minor {
+  			  stroke-opacity: .5;
+  			}
+
+  			.x.axis path {
+  			  display: none;
+  			}
+
+  			.y.axis line, .y.axis path {
+  			  fill: none;
+  			  stroke: #000;
+  			}
       }
     }
 
