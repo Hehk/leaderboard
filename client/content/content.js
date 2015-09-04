@@ -1,13 +1,7 @@
-function renderTimeline (target) {
-  //console.log(target);
-}
+Session.setDefault('favorites', null);
+Session.setDefault('generalPlayers', null);
 
-function filterPlayers (players, length, offset) {
-  offset = offset || 0;
-
-  return players.slice(offset, offset + length);
-}
-
+// defines the players used in testing
 players = (function () {
   var players = [],
       count = 1000;
@@ -26,27 +20,12 @@ players = (function () {
 })();
 
 if (Meteor.isClient) {
-  var generalTilesSettings = {
-    length: 20,
-    offset: 0,
-    prevActive: function () {
-      var target = $('#general').find('.prev');
-      if (this.offset > 0) {
-        target.removeClass('inactive');
-      } else {
-        target.addClass('inactive');
-      }
-    },
-    nextActive: function () {
-      var target = $('#general').find('.next');
-      if (this.offset + this.length < players.length) {
-        target.removeClass('inactive');
-      } else {
-        target.addClass('inactive');
-      }
-    },
-    sort: {}
+  // renders a timline at the target
+  var renderTimeline = function (target) {
+    console.log(target);
   };
+
+  // handles toggling tiles between being slected and not
   var tileClick = function (event) {
     $('.tile-info').remove();
 
@@ -66,10 +45,16 @@ if (Meteor.isClient) {
     } else {
       event.target.className = 'tile';
     }
-  }, adjustScroll = function (delta) {
+  };
+
+  // adjusts the scrollTop based on an inputed delta
+  var adjustScroll = function (delta) {
     var target = $(window);
     target.scrollTop(target.scrollTop() + delta);
-  }, favoriteClick = function (event) {
+  };
+
+  // handles when any favorite button is clicked
+  var favoriteClick = function (event) {
     var favorites = Session.get('favorites'),
         id = event.target.getAttribute('sel-id');
 
@@ -92,7 +77,51 @@ if (Meteor.isClient) {
     generalTilesSettings.nextActive();
     $('.tile-info').remove();
     $('#general').find('.tile').removeClass('selected');
-  }, sortGeneral = function (option) {
+  };
+
+  Session.set('favorites', []);
+
+  // ---------------------------------------------------------------------------
+  // FAVORITES TEMPLATE CODE ---------------------------------------------------
+  // ---------------------------------------------------------------------------
+
+  Template.favorites.helpers({
+    isPopulated: function () {
+      return Session.get('favorites').length > 0;
+    },
+    players: function () {
+      var favorites = Session.get('favorites'),
+          content = [];
+
+      for (var player in players) {
+        if (players.hasOwnProperty(player) &&
+            favorites.indexOf(players[player].selId) !== -1)
+        {
+            content.push(players[player]);
+        }
+      }
+      return content;
+    }
+  });
+
+  Template.favorites.events({
+    'click .tile' : tileClick,
+    'click .favorite-button' : favoriteClick
+  });
+
+  // ---------------------------------------------------------------------------
+  // GENERAL TEMPLATE CODE -----------------------------------------------------
+  // ---------------------------------------------------------------------------
+
+  // determines a subset of players based on position
+  var filterPlayers = function (players, length, offset) {
+    offset = offset || 0;
+
+    return players.slice(offset, offset + length);
+  };
+
+  // takes in a sorting option and sorts the general template accordingly
+  var sortGeneral = function (option) {
     var sortFn = null,
         targets = $('.prefix').removeClass('selected');
 
@@ -146,33 +175,29 @@ if (Meteor.isClient) {
     }
   };
 
-  Session.set('favorites', []);
-
-  Template.favorites.helpers({
-    isPopulated: function () {
-      return Session.get('favorites').length > 0;
-    },
-    players: function () {
-      var favorites = Session.get('favorites'),
-          content = [];
-
-      for (var player in players) {
-        if (players.hasOwnProperty(player) &&
-            favorites.indexOf(players[player].selId) !== -1)
-        {
-            content.push(players[player]);
-        }
+  //settings used for the rendering of the general template
+  var generalTilesSettings = {
+    length: 20,
+    offset: 0,
+    prevActive: function () {
+      var target = $('#general').find('.prev');
+      if (this.offset > 0) {
+        target.removeClass('inactive');
+      } else {
+        target.addClass('inactive');
       }
-      return content;
-    }
-  });
+    },
+    nextActive: function () {
+      var target = $('#general').find('.next');
+      if (this.offset + this.length < players.length) {
+        target.removeClass('inactive');
+      } else {
+        target.addClass('inactive');
+      }
+    },
+    sort: {}
+  };
 
-  Template.favorites.events({
-    'click .tile' : tileClick,
-    'click .favorite-button' : favoriteClick
-  });
-
-  Session.set('generalPlayers', filterPlayers(players, generalTilesSettings.length));
   Template.general.helpers({
     players: function () {
       return Session.get('generalPlayers');
@@ -206,7 +231,6 @@ if (Meteor.isClient) {
   Template.general.rendered = function () {
     generalTilesSettings.prevActive();
     generalTilesSettings.nextActive();
-    sortGeneral('rank')
 
     Tracker.autorun(function () {
       var players = Session.get('generalPlayers'),
@@ -226,4 +250,6 @@ if (Meteor.isClient) {
       });
     });
   };
+
+  Session.set('generalPlayers', filterPlayers(players, generalTilesSettings.length));
 }
