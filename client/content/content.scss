@@ -2,7 +2,10 @@
 
 .content {
   margin-bottom: 100px;
-  h1, .tile, .menu {
+
+  h1,
+  .tile,
+  .menu {
     width: 1000px;
     margin: auto;
   }
@@ -28,11 +31,12 @@
       justify-content: flex-end;
       font-size: 18px;
 
-      .prev, .next {
+      .prev,
+      .next {
         height: 30px;
         line-height: 30px;
         margin: 10px 0 10px 10px;
-        padding: 0 10px 0 10px;
+        padding: 0 10px;
         background-color: $primary-color;
         box-shadow: 0 1px 2px $secondary-text-color;
         color: $primary-color-text;
@@ -43,6 +47,7 @@
 
         &.inactive {
           background-color: $primary-color-light;
+
           &:hover {
             background-color: $primary-color-light;
           }
@@ -68,13 +73,14 @@
     &:hover {
       border-left: 2px solid $primary-color;
     }
+
     &:last-child {
       border-bottom: none;
     }
 
     &.selected {
       width: 1050px;
-      margin: 20px auto 20px auto;
+      margin: 20px auto;
       border-left: 2px solid $primary-color;
 
       /* first-child does not work :( */
@@ -84,12 +90,16 @@
     }
 
     .name {
-      .user-name, .char-name, .favorite-button {
+      .user-name,
+      .char-name,
+      .favorite-button {
         float: left;
+
         &:first-child {
           margin-left: 10px;
         }
       }
+
       .favorite-button {
         margin-right: 10px;
         color: $divider-color;
@@ -100,19 +110,22 @@
           color: $accent-color;
         }
       }
+
       .user-name {
         width: 150px;
       }
+
       .char-name {
         color: $accent-color;
       }
     }
+
     .data {
       display: flex;
       justify-content: flex-end;
 
       div {
-        margin: 0 10px 0 10px;
+        margin: 0 10px;
 
         .selected {
           color: $accent-color;
@@ -137,31 +150,32 @@
         height: 300px;
 
         path {
-  				stroke: $accent-color;
-  				stroke-width: 2;
-  				fill: none;
-  			}
+          stroke: $accent-color;
+          stroke-width: 2;
+          fill: none;
+        }
 
-  			.axis {
-  			  shape-rendering: crispEdges;
-  			}
+        .axis {
+          shape-rendering: crispEdges;
+        }
 
-  			.x.axis line {
-  			  stroke: lightgrey;
-  			}
+        .x.axis line {
+          stroke: lightgrey;
+        }
 
-  			.x.axis .minor {
-  			  stroke-opacity: .5;
-  			}
+        .x.axis .minor {
+          stroke-opacity: 0.5;
+        }
 
-  			.x.axis path {
-  			  display: none;
-  			}
+        .x.axis path {
+          display: none;
+        }
 
-  			.y.axis line, .y.axis path {
-  			  fill: none;
-  			  stroke: #000;
-  			}
+        .y.axis line,
+        .y.axis path {
+          fill: none;
+          stroke: #000;
+        }
       }
     }
 

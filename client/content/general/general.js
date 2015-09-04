@@ -2,14 +2,14 @@ if (Meteor.isClient) {
   Session.setDefault('generalPlayers', null);
 
   // takes in a sorting option and sorts the general template accordingly
-  var sortGeneral = function (option) {
+  var sortGeneral = function(option) {
     var sortFn = null,
-        targets = $('.prefix').removeClass('selected');
+      targets = $('.prefix').removeClass('selected');
 
     switch (option) {
       case 'rank':
         if (settings.sort.by === 'rank' && settings.sort.direction === 'up') {
-          sortFn = function (a, b) {
+          sortFn = function(a, b) {
             return b.rank - a.rank;
           };
           settings.sort = {
@@ -17,7 +17,7 @@ if (Meteor.isClient) {
             direction: 'down'
           };
         } else {
-          sortFn = function (a, b) {
+          sortFn = function(a, b) {
             return a.rank - b.rank;
           };
           settings.sort = {
@@ -30,7 +30,7 @@ if (Meteor.isClient) {
         break;
       case 'win-rate':
         if (settings.sort.by === 'win-rate' && settings.sort.direction === 'up') {
-          sortFn = function (a, b) {
+          sortFn = function(a, b) {
             return b.winRate - a.winRate;
           };
           settings.sort = {
@@ -38,7 +38,7 @@ if (Meteor.isClient) {
             direction: 'down'
           };
         } else {
-          sortFn = function (a, b) {
+          sortFn = function(a, b) {
             return a.winRate - b.winRate;
           };
           settings.sort = {
@@ -63,7 +63,7 @@ if (Meteor.isClient) {
     sort: {}
   };
 
-  var reloadNextPrev = function () {
+  var reloadNextPrev = function() {
     var target = $('#general').find('.prev');
     if (settings.offset > 0) {
       target.removeClass('inactive');
@@ -80,13 +80,13 @@ if (Meteor.isClient) {
   };
 
   Template.general.helpers({
-    players: function () {
+    players: function() {
       return Session.get('generalPlayers');
     }
   });
 
   Template.general.events({
-    'click .next' : function () {
+    'click .next': function() {
       if (settings.offset + settings.length < players.length) {
         settings.offset = settings.offset + settings.length;
         contentUtils.reloadData(
@@ -97,7 +97,7 @@ if (Meteor.isClient) {
         );
       }
     },
-    'click .prev' : function () {
+    'click .prev': function() {
       if (settings.offset > 0) {
         settings.offset = settings.offset - settings.length;
         contentUtils.reloadData(
@@ -108,27 +108,27 @@ if (Meteor.isClient) {
         );
       }
     },
-    'click .tile' : contentUtils.tileClick,
-    'click .favorite-button' : contentUtils.favoriteClick,
-    'click .sort-option' : function (event) {
+    'click .tile': contentUtils.tileClick,
+    'click .favorite-button': contentUtils.favoriteClick,
+    'click .sort-option': function(event) {
       sortGeneral(event.target.innerText);
     },
-    'click .prefix' : function (event) {
+    'click .prefix': function(event) {
       sortGeneral(event.target.getAttribute('value'));
       event.stopPropagation();
     }
   });
 
-  Template.general.rendered = function () {
+  Template.general.rendered = function() {
     reloadNextPrev();
     sortGeneral('rank');
-    
-    Tracker.autorun(function () {
-      var players = Session.get('generalPlayers'),
-          favorites = Session.get('favorites');
 
-      Tracker.afterFlush(function () {
-        players.forEach(function (player) {
+    Tracker.autorun(function() {
+      var players = Session.get('generalPlayers'),
+        favorites = Session.get('favorites');
+
+      Tracker.afterFlush(function() {
+        players.forEach(function(player) {
           if (favorites.indexOf(player.selId) !== -1) {
             $('[sel-id="' + player.selId + '"]').removeClass('fa-star-o')
               .addClass('fa-star selected');

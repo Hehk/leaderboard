@@ -1,15 +1,13 @@
 <template name="favorites">
   {{#if isPopulated}}
-    <div id="favorites">
-      <div class="menu" id="favorites">
-        <div class="title">Favorites</div>
-      </div>
-      <div class="tiles">
-        {{#each players}}
-          {{> tileFavorite}}
-        {{/each}}
-      </div>
+  <div id="favorites">
+    <div class="menu" id="favorites">
+      <div class="title">Favorites</div>
     </div>
+    <div class="tiles">
+      {{#each players}} {{> tileFavorite}} {{/each}}
+    </div>
+  </div>
   {{/if}}
 </template>
 
