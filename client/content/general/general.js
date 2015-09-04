@@ -86,7 +86,7 @@ if (Meteor.isClient) {
   });
 
   Template.general.events({
-    'click .next' : function (event) {
+    'click .next' : function () {
       if (settings.offset + settings.length < players.length) {
         settings.offset = settings.offset + settings.length;
         contentUtils.reloadData(
@@ -97,7 +97,7 @@ if (Meteor.isClient) {
         );
       }
     },
-    'click .prev' : function (event) {
+    'click .prev' : function () {
       if (settings.offset > 0) {
         settings.offset = settings.offset - settings.length;
         contentUtils.reloadData(

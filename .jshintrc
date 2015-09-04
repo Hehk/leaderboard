@@ -91,9 +91,14 @@
     // Custom Globals
     "globals"       : {
         "Meteor" : false,
-        "$" : false,
-        "leaderboardUtils" : false,
         "Blaze" : false,
-        
+        "Session" : false,
+        "Template" : false,
+        "Tracker" : false,
+
+        "$" : false,
+
+        "contentUtils" : false,
+        "players" : false
       }
 }
