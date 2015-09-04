@@ -1,0 +1,41 @@
+<template name="general">
+  <div id="general">
+    <div class="menu">
+      <div class="title">Leaderboard</div>
+      <div class="nav">
+
+        <div class="prev">Prev</div>
+        <div class="next">Next</div>
+      </div>
+    </div>
+    <div class="tiles">
+      {{#each players}}
+        {{> tileGeneral}}
+      {{/each}}
+    </div>
+  </div>
+</template>
+
+<template name="tileGeneral">
+  <div class="tile">
+    <div class="name no-interact">
+      <div class="favorite-button fa fa-star-o" sel-id="{{selId}}"></div>
+      <div class="user-name">
+        {{userName}}
+      </div>
+      <div class="char-name">
+        {{charName}}
+      </div>
+    </div>
+    <div class="data no-interact">
+      <div class="rank">
+        <span class="prefix rank" value="rank">Rank: </span>
+        {{rank}}
+      </div>
+      <div>
+        <span class="prefix win-rate" value="win-rate">Win Rate: </span>
+        {{winRate}}%
+      </div>
+    </div>
+  </div>
+</template>

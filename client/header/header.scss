@@ -1,0 +1,42 @@
+@import 'client/lib/_colors.scss';
+
+.header {
+  $height: 60px;
+  height: $height;
+  line-height: $height;
+  font-size: 24px;
+  font-weight: bold;
+
+  color: $primary-color-text;
+  background-color: $primary-color;
+  box-shadow: 0 1px 10px $secondary-text-color;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+
+  .title {
+    margin-left: 10px;
+    float: left;
+  }
+
+  .nav-options {
+    display: flex;
+    justify-content: flex-end;
+
+    div {
+      margin: 5px;
+      padding: 0 10px 0 10px;
+
+      height: $height - 10px;
+      line-height: $height - 10px;
+      border-radius: 5px;
+
+      &:hover{
+        background-color: $primary-color-dark;
+      }
+    }
+  }
+}

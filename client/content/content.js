@@ -1,10 +1,3 @@
-function generateID () {
-  // Math.random should be unique because of its seeding algorithm.
-  // Convert it to base 36 (numbers + letters), and grab the first 9 characters
-  // after the decimal.
-  return '_' + Math.random().toString(36).substr(2, 9);
-}
-
 function renderTimeline (target) {
   //console.log(target);
 }
@@ -25,7 +18,7 @@ players = (function () {
       charName: i.toString(),
       rank: i,
       winRate: 70 - i,
-      selId: generateID()
+      selId: leaderboardUtils.generateID()
     });
   }
 
@@ -155,10 +148,6 @@ if (Meteor.isClient) {
 
   Session.set('favorites', []);
 
-  Template.header.helpers({
-    options: ['Favorites', 'General']
-  });
-
   Template.favorites.helpers({
     isPopulated: function () {
       return Session.get('favorites').length > 0;
@@ -237,10 +226,4 @@ if (Meteor.isClient) {
       });
     });
   };
-}
-
-if (Meteor.isServer) {
-  Meteor.startup(function () {
-    // code to run on server at startup
-  });
 }
