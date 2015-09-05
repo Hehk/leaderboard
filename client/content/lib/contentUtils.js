@@ -1,38 +1,50 @@
+// temporary function until server side is built up
+function retrieveTimelineSettings (/* id */) {
+  var settings = {
+    minX: (new Date(2015, 8, 100)).getTime(),
+    maxX: (new Date(2015, 8, 150)).getTime(),
+    minY: 0,
+    maxY: null,
+    data: []
+  };
+  for (var i = 100; i <= 150; i++) {
+    if (settings.maxY === null || settings.maxY < i) {
+      settings.maxY = i;
+    }
+
+    settings.data.push({
+      rank: i,
+      date: (new Date(2015, 8, i)).getTime()
+    });
+  }
+
+  return settings;
+}
+
 if (Meteor.isClient) {
   contentUtils = (function() {
-    function renderTimeline(target) {
-      /* implementation heavily influenced by http://bl.ocks.org/1166403 */
-
-      // define dimensions of graph
+    function renderTimeline(target, id) {
       var m = [20, 20, 20, 80]; // margins
       var w = 1000 - m[1] - m[3]; // width
       var h = 300 - m[0] - m[2]; // height
 
-      // create a simple data array that we'll plot with a line (this array represents only the Y values, X will just be the index location)
-      var data = [3, 6, 2, 7, 5, 2, 0, 3, 8, 9, 2, 5, 9, 3, 6, 3, 6, 2, 7, 5, 2, 1, 3, 8, 9, 2, 5, 9, 2, 7, 5];
+      // retrieves the settings data for the timeline
+      var settings = retrieveTimelineSettings(id);
 
-      // X scale will fit all values from data[] within pixels 0-w
-      var x = d3.scale.linear().domain([0, data.length]).range([0, w]);
-      // Y scale will fit values from 0-10 within pixels h-0 (Note the inverted domain for the y-scale: bigger is up!)
-      var y = d3.scale.linear().domain([0, 10]).range([h, 0]);
-      // automatically determining max range can work something like this
-      // var y = d3.scale.linear().domain([0, d3.max(data)]).range([h, 0]);
+      // computes scale for the graph
+      var x = d3.scale.linear().domain([settings.minX, settings.maxX]).range([0, w]);
+      var y = d3.scale.linear().domain([settings.minY, settings.maxY]).range([h, 0]);
 
-      // create a line function that can convert data[] into x and y points
+      // creates the line using data from the settings
       var line = d3.svg.line()
-        // assign the X function to plot our line as we wish
-        .x(function(d, i) {
-          // verbose logging to show what's actually being done
-          console.log('Plotting X value for data point: ' + d + ' using index: ' + i + ' to be at: ' + x(i) + ' using our xScale.');
-          // return the X coordinate where we want to plot this datapoint
-          return x(i);
+        .x(function(d) {
+          return x(d.date);
         })
         .y(function(d) {
-          // verbose logging to show what's actually being done
-          console.log('Plotting Y value for data point: ' + d + ' to be at: ' + y(d) + " using our yScale.");
-          // return the Y coordinate where we want to plot this datapoint
-          return y(d);
-        });
+          return y(d.rank);
+        })
+        // makes the line curvy rather than have sharp joins between points
+        .interpolate("cardinal");
 
       // Add an SVG element with the desired dimensions and margin.
       var graph = target.append("svg:svg")
@@ -42,13 +54,15 @@ if (Meteor.isClient) {
         .attr("transform", "translate(" + m[3] + "," + m[0] + ")");
 
       // create yAxis
-      var xAxis = d3.svg.axis().scale(x).tickSize(-h).tickSubdivide(true);
+      var xAxis = d3.svg.axis().scale(x).tickSize(-h).tickSubdivide(true).tickFormat(function (d) {
+        var tickDate = new Date(d);
+        return tickDate.toString().split(' ')[1] + ' ' + tickDate.getDate();
+      });
       // Add the x-axis.
       graph.append("svg:g")
         .attr("class", "x axis")
         .attr("transform", "translate(0," + h + ")")
         .call(xAxis);
-
 
       // create left yAxis
       var yAxisLeft = d3.svg.axis().scale(y).ticks(4).orient("left");
@@ -58,9 +72,8 @@ if (Meteor.isClient) {
         .attr("transform", "translate(-25,0)")
         .call(yAxisLeft);
 
-      // Add the line by appending an svg:path element with the data line we created above
-      // do this AFTER the axes above so that the line is above the tick-lines
-      graph.append("svg:path").attr("d", line(data));
+      // appends the path after the tick lines so that it goes over them
+      graph.append("svg:path").attr("d", line(settings.data));
     }
 
     return {

@@ -147,12 +147,17 @@
       border-top: 1px $divider-color solid;
 
       .timeline {
-        height: 300px;
+        height: auto;
 
         path {
           stroke: $accent-color;
           stroke-width: 2;
           fill: none;
+        }
+
+        .area {
+          stroke: $primary-color;
+          stroke-width: 0;
         }
 
         .axis {
@@ -175,6 +180,7 @@
         .y.axis path {
           fill: none;
           stroke: #000;
+          stroke-width: 1;
         }
       }
     }
