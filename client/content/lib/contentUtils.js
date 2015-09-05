@@ -141,7 +141,7 @@ if (Meteor.isClient) {
     var players = [],
       count = 1000;
 
-    for (var i = 0; i < count; i++) {
+    for (var i = 1; i <= count; i++) {
       players.push({
         userName: 'test.8888',
         charName: i.toString(),

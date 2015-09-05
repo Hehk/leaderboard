@@ -1,5 +1,13 @@
 if (Meteor.isClient) {
   Session.setDefault('generalPlayers', null);
+  Session.setDefault('posLabel', '');
+
+  //settings used for the rendering of the general template
+  var settings = {
+    length: 20,
+    offset: 0,
+    sort: {}
+  };
 
   // takes in a sorting option and sorts the general template accordingly
   var sortGeneral = function(option) {
@@ -56,13 +64,6 @@ if (Meteor.isClient) {
     }
   };
 
-  //settings used for the rendering of the general template
-  var settings = {
-    length: 20,
-    offset: 0,
-    sort: {}
-  };
-
   var reloadNextPrev = function() {
     var target = $('#general').find('.prev');
     if (settings.offset > 0) {
@@ -77,11 +78,18 @@ if (Meteor.isClient) {
     } else {
       target.addClass('inactive');
     }
+
+    Session.set('posLabel',
+      '[' + (settings.offset + 1) + '-' + (settings.offset + settings.length) +
+      '] of ' + players.length);
   };
 
   Template.general.helpers({
     players: function() {
       return Session.get('generalPlayers');
+    },
+    posLabel: function () {
+      return Session.get('posLabel');
     }
   });
 
