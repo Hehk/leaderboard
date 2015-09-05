@@ -20,5 +20,8 @@ Template.favorites.helpers({
 
 Template.favorites.events({
   'click .tile': contentUtils.tileClick,
-  'click .favorite-button': contentUtils.favoriteClick
+  'click .favorite-button': contentUtils.favoriteClick,
+  'click .prefix' : function (event) {
+    event.stopPropagation();
+  }
 });
