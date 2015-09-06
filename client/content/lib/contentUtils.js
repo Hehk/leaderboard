@@ -135,7 +135,7 @@ if (Meteor.isClient) {
         return players.slice(offset, offset + length);
       },
       searchContent : function (term) {
-        var regex = new RegExp(term, 'i'),
+        var regex = new RegExp(term.trim(), 'i'),
             content = generalPlayers,
             filteredContent = [],
             elem;
