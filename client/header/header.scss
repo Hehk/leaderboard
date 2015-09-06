@@ -26,16 +26,74 @@
     display: flex;
     justify-content: flex-end;
 
-    div {
+    .header-button {
       margin: 5px;
       padding: 0 10px 0 10px;
 
       height: $height - 10px;
       line-height: $height - 10px;
-      border-radius: 5px;
+      border-radius: 3px;
 
       &:hover{
         background-color: $primary-color-dark;
+      }
+    }
+
+    .header-search {
+      margin: 5px;
+      text-align: center;
+      width: $height - 10px;
+      height: $height - 10px;
+      line-height: $height - 10px;
+      border-radius: 50%;
+
+      span {
+        pointer-events: none;
+      }
+
+      textarea {
+        width: 0;
+        height: 0;
+        visibility: collapse;
+        position:absolute;
+      }
+
+      &.selected {
+        width: 300px;
+        border-radius: ($height - 10px) / 2;
+        text-align: left;
+        background-color: $primary-color-dark;
+
+        span {
+          margin-left: 10px;
+        }
+        textarea {
+          overflow: hidden;
+          position: fixed;
+          top: 13px;
+
+          font-family: 'Abel';
+          font-size: 24px;
+          color: $primary-color-text;
+          background-color: $primary-color-dark;
+          border: none;
+          outline: none;
+
+          resize: none;
+          margin-left: 10px;
+
+          height: 30px;
+          width: 240px;
+          visibility: visible;
+        }
+      }
+
+      &:hover {
+        background-color: $primary-color-dark;
+
+        textarea {
+          background-color: $primary-color-dark;
+        }
       }
     }
   }

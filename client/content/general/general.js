@@ -1,6 +1,25 @@
+// defines the players used in testing
+generalPlayers = (function() {
+  var players = [],
+    count = 1000;
+
+  for (var i = 1; i <= count; i++) {
+    players.push({
+      userName: 'test.8888',
+      charName: i.toString(),
+      rank: i,
+      winRate: 70 - i,
+      selId: contentUtils.generateID()
+    });
+  }
+
+  return players;
+})();
+
 if (Meteor.isClient) {
-  Session.setDefault('generalPlayers', null);
-  Session.setDefault('posLabel', '');
+  Session.setDefault('general-players-filtered', generalPlayers);
+  Session.setDefault('general-players-visible', null);
+  Session.setDefault('general-label-position', '');
 
   //settings used for the rendering of the general template
   var settings = {
@@ -59,13 +78,16 @@ if (Meteor.isClient) {
         break;
     }
     if (sortFn !== null) {
-      players.sort(sortFn);
-      Session.set('generalPlayers', contentUtils.filterContent(players, settings.length));
+      var players = Session.get('general-players-filtered');
+      Session.set('general-players-filtered', players.sort(sortFn));
+      Session.set('general-players-visible', contentUtils.filterContent(players, settings.length));
     }
   };
 
   var reloadNextPrev = function() {
-    var target = $('#general').find('.prev');
+    var players = Session.get('general-players-filtered'),
+        target = $('#general').find('.prev');
+
     if (settings.offset > 0) {
       target.removeClass('inactive');
     } else {
@@ -78,41 +100,38 @@ if (Meteor.isClient) {
     } else {
       target.addClass('inactive');
     }
-
-    Session.set('posLabel',
-      '[' + (settings.offset + 1) + '-' + (settings.offset + settings.length) +
-      '] of ' + players.length);
   };
 
   Template.general.helpers({
     players: function() {
-      return Session.get('generalPlayers');
+      return Session.get('general-players-visible');
     },
-    posLabel: function () {
-      return Session.get('posLabel');
+    generalLabelPosition: function () {
+      return Session.get('general-label-position');
     }
   });
 
   Template.general.events({
-    'click .next': function() {
+    'click .next,.prev': function() {
+      var players = Session.get('general-players-filtered');
+
       if (settings.offset + settings.length < players.length) {
-        settings.offset = settings.offset + settings.length;
+        if (event.target.classList.contains('next')) {
+          settings.offset = settings.offset + settings.length;
+        } else {
+          settings.offset = settings.offset - settings.length;
+        }
+        Session.set('general-players-visible',
+          contentUtils.filterContent(
+            players,
+            settings.length,
+            settings.offset
+        ));
+
         contentUtils.reloadData(
           players,
           settings.length,
-          settings.offset,
-          reloadNextPrev
-        );
-      }
-    },
-    'click .prev': function() {
-      if (settings.offset > 0) {
-        settings.offset = settings.offset - settings.length;
-        contentUtils.reloadData(
-          players,
-          settings.length,
-          settings.offset,
-          reloadNextPrev
+          settings.offset
         );
       }
     },
@@ -128,15 +147,15 @@ if (Meteor.isClient) {
   });
 
   Template.general.rendered = function() {
-    reloadNextPrev();
     sortGeneral('rank');
 
     Tracker.autorun(function() {
-      var players = Session.get('generalPlayers'),
-        favorites = Session.get('favorites');
+      var playersLength =  Session.get('general-players-filtered').length,
+          visiblePlayers = Session.get('general-players-visible'),
+          favorites = Session.get('favorites');
 
       Tracker.afterFlush(function() {
-        players.forEach(function(player) {
+        visiblePlayers.forEach(function(player) {
           if (favorites.indexOf(player.selId) !== -1) {
             $('[sel-id="' + player.selId + '"]').removeClass('fa-star-o')
               .addClass('fa-star selected');
@@ -147,8 +166,24 @@ if (Meteor.isClient) {
           }
         });
       });
-    });
-  };
 
-  Session.set('generalPlayers', contentUtils.filterContent(players, settings.length));
+      if (Session.get('general-label-position') === null) {
+        settings.offset = 0;
+      }
+
+      Session.set('general-label-position',
+        '[' + (settings.offset + 1) + '-' +
+        (settings.offset + settings.length < playersLength ?
+          settings.offset + settings.length : playersLength) +
+        '] of ' + playersLength);
+
+      reloadNextPrev();
+    });
+
+    Session.set('general-players-visible',
+      contentUtils.filterContent(
+        Session.get('general-players-filtered'),
+        settings.length
+      ));
+  };
 }

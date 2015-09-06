@@ -5,10 +5,21 @@
     </div>
     <div class="nav-options">
       {{#each options}}
-        <div>
-          {{this}}
-        </div>
+        {{> UI.dynamic template=template}}
       {{/each}}
     </div>
+  </div>
+</template>
+
+<template name="header_button">
+  <div class="header-button">
+    {{name}}
+  </div>
+</template>
+
+<template name="header_search">
+  <div class="header-search">
+    <span class="fa fa-search"></span>
+    <textarea name="name" rows="1" cols="100" wrap="off"></textarea>
   </div>
 </template>

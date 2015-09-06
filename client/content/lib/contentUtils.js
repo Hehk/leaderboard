@@ -77,9 +77,11 @@ if (Meteor.isClient) {
     }
 
     return {
+      // generates a unique ID
       generateID: function() {
         return '_' + Math.random().toString(36).substr(2, 9);
       },
+      // the standard funcitonality of a tile click
       tileClick: function(event) {
         $('.tile-info').remove();
 
@@ -100,10 +102,12 @@ if (Meteor.isClient) {
           event.target.className = 'tile';
         }
       },
+      // adjusts the scroll so the users stays in the same space
       adjustScroll: function(delta) {
         var target = $(window);
         target.scrollTop(target.scrollTop() + delta);
       },
+      // handler for when a favorite star is clicked
       favoriteClick: function(event) {
         var favorites = Session.get('favorites'),
           id = event.target.getAttribute('sel-id');
@@ -119,38 +123,38 @@ if (Meteor.isClient) {
         Session.set('favorites', favorites);
         event.stopPropagation();
       },
-      reloadData: function(content, length, offset, callback) {
-        var filteredPlayers = contentUtils.filterContent(content, length, offset);
-
-        Session.set('generalPlayers', filteredPlayers);
-
+      // reloads the generalPlayers data
+      reloadData: function() {
         $('.tile-info').remove();
         $('#general').find('.tile').removeClass('selected');
-        callback();
       },
+      // filters the content based off length and offset from the start
       filterContent: function(players, length, offset) {
         offset = offset || 0;
 
         return players.slice(offset, offset + length);
+      },
+      searchContent : function (term) {
+        var regex = new RegExp(term, 'i'),
+            content = generalPlayers,
+            filteredContent = [],
+            elem;
+
+        for (var i = 0; i < content.length; i++) {
+          elem = content[i];
+          if (regex.test(elem.userName) || regex.test(elem.charName)) {
+            filteredContent.push(elem);
+          }
+        }
+
+        Session.set('general-players-filtered', filteredContent);
+        Session.set('general-players-visible', contentUtils.filterContent(
+          filteredContent,
+          20,
+          0
+        ));
+        Session.set('posLabel', null);
       }
     };
-  })();
-
-  // defines the players used in testing
-  players = (function() {
-    var players = [],
-      count = 1000;
-
-    for (var i = 1; i <= count; i++) {
-      players.push({
-        userName: 'test.8888',
-        charName: i.toString(),
-        rank: i,
-        winRate: 70 - i,
-        selId: contentUtils.generateID()
-      });
-    }
-
-    return players;
   })();
 }
