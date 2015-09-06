@@ -167,6 +167,7 @@ if (Meteor.isClient) {
         });
       });
 
+      console.log('sdfs');
       if (Session.get('general-label-position') === null) {
         settings.offset = 0;
       }

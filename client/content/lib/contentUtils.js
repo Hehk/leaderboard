@@ -153,7 +153,7 @@ if (Meteor.isClient) {
           20,
           0
         ));
-        Session.set('posLabel', null);
+        Session.set('general-label-position', null);
       }
     };
   })();
