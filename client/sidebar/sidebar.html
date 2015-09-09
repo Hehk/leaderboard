@@ -1,15 +1,7 @@
 <template name="sidebar">
   <div class="sidebar">
-    <!--<div class="title">
-      Guild Wars 2 Leaderboard
-    </div>
     <div class="nav-options">
-      {{#each options}}
-        {{> UI.dynamic template=template}}
-      {{/each}}
-    </div>-->
-
-    <div class="nav-options">
+      {{> sidebar_search}}
       {{#each options}}
         {{> sidebar_button}}
       {{/each}}
@@ -28,6 +20,6 @@
 <template name="sidebar_search">
   <div class="sidebar-search">
     <span class="fa fa-search"></span>
-    <textarea name="name" rows="1" cols="100" wrap="off"></textarea>
+    <textarea wrap="off"></textarea>
   </div>
 </template>
