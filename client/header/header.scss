@@ -1,0 +1,13 @@
+@import 'client/lib/_colors.scss';
+@import 'client/lib/_dimensions.scss';
+
+.header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  height: $header-height;
+  background-color: $accent-color;
+  box-shadow: $shadow;
+}

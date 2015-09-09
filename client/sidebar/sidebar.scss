@@ -1,8 +1,10 @@
 @import 'client/lib/_colors.scss';
+@import 'client/lib/_dimensions.scss';
 
 .sidebar {
   $height: 60px;
-  width: 250px;
+  width: $sidebar-width;
+  height: 100%;
   line-height: 60px;
   font-size: 24px;
   font-weight: bold;

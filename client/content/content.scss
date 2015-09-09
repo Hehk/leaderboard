@@ -1,4 +1,5 @@
 @import 'client/lib/_colors.scss';
+@import 'client/lib/_dimensions.scss';
 
 .content {
   margin-bottom: 100px;
@@ -6,7 +7,7 @@
   top: 0;
   bottom: 0;
   right: 0;
-  left: 250px;
+  left: $sidebar-width;
 
   h1,
   .tile,

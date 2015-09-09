@@ -1,0 +1,12 @@
+<template name="header">
+  <div class="header">
+    <div class="title">
+      Guild Wars 2 Leaderboard
+    </div>
+    <div class="nav">
+      {{#each navOption}}
+        <a href="#{{id}}">{{name}}</a>
+      {{/each}}
+    </div>
+  </div>
+</template>
