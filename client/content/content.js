@@ -19,7 +19,7 @@ if (Meteor.isClient) {
     })();
 
 
-    contentUtils.addTileGroup('leaderboard', generalPlayers);
+    contentUtils.addTileGroup('leaderboard', generalPlayers, false);
     contentUtils.addTileGroup('test', generalPlayers);
   };
 }

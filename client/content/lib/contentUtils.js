@@ -12,7 +12,7 @@ if (Meteor.isClient) {
 
         return content;
       },
-      addTileGroup : function (name, content) {
+      addTileGroup : function (name, content, options) {
         var tileGroup = new TileGroup(name, content),
             sidebar = Session.get('sidebar');
 
@@ -21,7 +21,10 @@ if (Meteor.isClient) {
         }
         Blaze.renderWithData(Template.tileGroup, tileGroup, $('.content')[0]);
         TileGroupCollection.push(new TileGroup(name, content));
-        sidebar.push(name);
+        sidebar.push({
+          name : name,
+          options : typeof options === 'undefined' || options === true ? true : options
+        });
         Session.set('sidebar', sidebar);
       },
       removeTileGroup : function (name) {

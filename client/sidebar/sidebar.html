@@ -11,13 +11,15 @@
 </template>
 
 <template name="sidebar_button">
-  <div class="sidebar-button" value="{{this}}">
+  <div class="sidebar-button" value="{{name}}">
     <span class="fa fa-users"></span>
-    {{this}}
+    {{name}}
+    {{#if options}}
     <div class="options">
       <span class="fa fa-cog"></span>
       <span class="fa fa-trash-o"></span>
     </div>
+    {{/if}}
   </div>
 </template>
 
