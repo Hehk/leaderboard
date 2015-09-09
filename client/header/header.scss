@@ -1,13 +1,37 @@
 @import 'client/lib/_colors.scss';
 @import 'client/lib/_dimensions.scss';
 
-.header {
+#header {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   z-index: 3;
+
   height: $header-height;
+  line-height: $header-height;
+
+  color: $primary-color-text;
   background-color: $accent-color;
   box-shadow: $shadow;
+
+  font-size: 42px;
+  font-weight: bold;
+
+  .title {
+    margin-left: 20px;
+    float: left;
+  }
+
+  .nav {
+    display: flex;
+    justify-content: flex-end;
+    font-size: 32px;
+
+    a {
+      margin-right: 20px;
+      text-decoration: none;
+      color: $primary-color-text;
+    }
+  }
 }
