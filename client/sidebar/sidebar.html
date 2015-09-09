@@ -1,0 +1,33 @@
+<template name="sidebar">
+  <div class="sidebar">
+    <!--<div class="title">
+      Guild Wars 2 Leaderboard
+    </div>
+    <div class="nav-options">
+      {{#each options}}
+        {{> UI.dynamic template=template}}
+      {{/each}}
+    </div>-->
+
+    <div class="nav-options">
+      {{#each options}}
+        {{> sidebar_button}}
+      {{/each}}
+      {{> addTileGroup}}
+    </div>
+  </div>
+</template>
+
+<template name="sidebar_button">
+  <div class="sidebar-button">
+    <span class="fa fa-users"></span>
+    {{this}}
+  </div>
+</template>
+
+<template name="sidebar_search">
+  <div class="sidebar-search">
+    <span class="fa fa-search"></span>
+    <textarea name="name" rows="1" cols="100" wrap="off"></textarea>
+  </div>
+</template>

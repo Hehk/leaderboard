@@ -1,0 +1,46 @@
+@import 'client/lib/_colors.scss';
+
+.overlay {
+  position: fixed;
+  background-color: rgba(100,100,100,0.5);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+
+  .menu-addTileGroup {
+    $height: 200px;
+    $width: 300px;
+
+    position: fixed;
+    width: $width;
+    height: $height;
+
+    top: 50%;
+    margin-top: ($height / 2) * -1;
+    left: 50%;
+    margin-left: ($width / 2) * -1;
+
+    padding: 10px;
+
+    background-color: $primary-color-text;
+
+    .title {
+      border-bottom: 2px solid $divider-color;
+      padding-bottom: 5px;
+      margin-bottom: 5px;
+
+      font-weight: bold;
+    }
+    .name {
+      span {
+
+      }
+      textarea {
+        resize: none;
+        height: 40px;
+      }
+    }
+  }
+}

@@ -1,0 +1,19 @@
+<template name="tileGroup">
+  {{#with content}}
+    <div id="{{id}}">
+      <div class="menu">
+        <div class="title">{{title}}</div>
+        <div class="nav">
+          <div class="label">{{labelPosition}}</div>
+          <div class="prev">Prev</div>
+          <div class="next">Next</div>
+        </div>
+      </div>
+      <div class="tiles">
+        {{#each players}}
+          {{> tile}}
+        {{/each}}
+      </div>
+    </div>
+  {{/with}}
+</template>

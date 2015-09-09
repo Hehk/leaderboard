@@ -1,0 +1,76 @@
+@import 'client/lib/_colors.scss';
+
+.sidebar {
+  $height: 60px;
+  width: 250px;
+  line-height: 60px;
+  font-size: 24px;
+  font-weight: bold;
+
+  color: $primary-color-text;
+  background-color: $primary-color;
+  box-shadow: $shadow;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+
+  .title {
+    margin-left: 10px;
+    float: left;
+  }
+
+  .nav-options {
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+
+    .sidebar-button,.addTileGroup {
+      margin: 0 20px 0 20px;
+      padding: 0 10px 0 10px;
+      height: 40px;
+      line-height: 40px;
+      border-radius: 3px;
+
+      &:first-child {
+        margin-top: 40px;
+      }
+
+      &:hover{
+        span {
+          color: $accent-color;
+        }
+      }
+
+      span {
+        font-size: 16px;
+        margin-right: 10px;
+      }
+    }
+
+    .addTileGroup {
+      display: flex;
+
+      span {
+        line-height: 40px;
+        font-size: 22px;
+        color: $accent-color;
+      }
+      textarea {
+        font-family: 'Abel';
+        font-size: 24px;
+        font-weight: bold;
+        color: $primary-color-text;
+
+        background: none;
+        border: none;
+        resize: none;
+        outline: none;
+        line-height: 40px;
+        padding-left: 5px;
+        vertical-align: middle;
+      }
+    }
+  }
+}

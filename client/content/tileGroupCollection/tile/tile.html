@@ -1,0 +1,22 @@
+<template name="tile">
+    <div class="tile">
+      <div class="name no-interact">
+        <div class="user-name">
+          {{userName}}
+        </div>
+        <div class="char-name">
+          {{charName}}
+        </div>
+      </div>
+      <div class="data no-interact">
+        <div class="rank">
+          <span class="prefix rank" value="rank">Rank: </span>
+          {{rank}}
+        </div>
+        <div>
+          <span class="prefix win-rate" value="win-rate">Win Rate: </span>
+          {{winRate}}%
+        </div>
+      </div>
+    </div>
+</template>
