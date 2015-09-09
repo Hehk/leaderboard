@@ -29,9 +29,9 @@
     .sidebar-button, .addTileGroup, .sidebar-search {
       margin: 0 20px 0 20px;
       padding: 0 10px 0 10px;
-      height: 40px;
       line-height: 40px;
       border-radius: 3px;
+      word-break: break-all;
 
       &:hover{
         span {
@@ -42,11 +42,13 @@
       span {
         font-size: 16px;
         margin-right: 10px;
+        pointer-events: none;
       }
     }
 
     .addTileGroup, .sidebar-search {
       display: flex;
+      height: 40px;
 
       span {
         line-height: 40px;
@@ -72,6 +74,26 @@
     .sidebar-search {
       margin-top: 20px;
       margin-bottom: 20px;
+    }
+
+    .sidebar-button {
+      position: relative;
+
+      .options {
+        position: absolute;
+        right: 0;
+        top: 0;
+        color: transparent;
+        span {
+          pointer-events: auto;
+        }
+      }
+
+      &:hover {
+        .options {
+          color: $accent-color;
+        }
+      }
     }
   }
 }
