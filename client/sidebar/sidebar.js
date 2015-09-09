@@ -1,5 +1,5 @@
 if (Meteor.isClient) {
-  Session.setDefault('sidebar', []);
+  Session.set('sidebar', []);
 
   Template.sidebar.helpers({
     options : function () {
