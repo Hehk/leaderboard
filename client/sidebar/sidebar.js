@@ -22,4 +22,12 @@ if (Meteor.isClient) {
       }
     }
   });
+
+  Template.sidebar_button.events({
+    'click' : function (event) {
+      $("html, body").animate({
+        scrollTop : $('#' + event.target.getAttribute('value')).position().top + 'px'
+      }, 1000);
+    }
+  });
 }
