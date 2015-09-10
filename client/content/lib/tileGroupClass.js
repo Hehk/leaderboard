@@ -4,6 +4,7 @@ TileGroup = function (name, players) {
   var me = this;
 
   this.name = name;
+  this.id = contentUtils.generateID();
   this.players = players;
   this.settings = {
     length: 20,
@@ -16,11 +17,11 @@ TileGroup = function (name, players) {
   Session.setDefault(this.name + '-players-visible',
     contentUtils.filterContent(this.players, this.settings.length, this.settings.offset));
   Session.setDefault(this.name + '-label-position', '');
-
+  Session.setDefault(this.name + '-name', this.name);
   // defines the helpers that will be used for the template
   this.content = {
     id : function () {
-      return me.name;
+      return me.id;
     },
     players : function () {
       return Session.get(me.name + '-players-visible');
@@ -29,7 +30,8 @@ TileGroup = function (name, players) {
       return Session.get(me.name + '-label-position');
     },
     title : function () {
-      return me.name.charAt(0).toUpperCase() + me.name.slice(1);
+      var name = Session.get(me.name + '-name');
+      return name.charAt(0).toUpperCase() + name.slice(1);
     }
   };
 
@@ -64,34 +66,15 @@ TileGroup = function (name, players) {
       target.addClass('inactive');
     }
   };
-};
 
-// reloads the tile group
-TileGroup.prototype.reload = function () {
-  var playersLength =  Session.get(this.name + '-players-filtered').length,
-      visiblePlayers = Session.get(this.name + '-players-visible'),
-      favorites = Session.get('favorites');
-
-  visiblePlayers.forEach(function(player) {
-    if (favorites.indexOf(player.selId) !== -1) {
-      $('[sel-id="' + player.selId + '"]').removeClass('fa-star-o')
-        .addClass('fa-star selected');
-    } else {
-      $('[sel-id="' + player.selId + '"]').removeClass('fa-star')
-        .removeClass('selected')
-        .addClass('fa-star-o');
-    }
-  });
-
-  if (Session.get(this.name + '-label-position') === null) {
-    this.settings.offset = 0;
-  }
-
-  Session.set(this.name + '-label-position',
-    '[' + (this.settings.offset + 1) + '-' +
-    (this.settings.offset + this.settings.length < playersLength ?
-      this.settings.offset + this.settings.length : playersLength) +
-    '] of ' + playersLength);
+  this._updateLength = function () {
+    Session.set(this.name + '-players-visible',
+      contentUtils.filterContent(
+        Session.get(this.name + '-players-filtered'),
+        this.settings.length,
+        this.settings.offset
+      ));
+  };
 };
 
 // sorts the tiles within based off an option passed in
@@ -180,6 +163,7 @@ TileGroup.prototype.filter = function (term) {
 TileGroup.prototype.update = function () {
   this._updatePrevNext();
   this._updateLabel();
+  this._updateLength();
 };
 
 // destroys the sessions required to render the tiles

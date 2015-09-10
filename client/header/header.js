@@ -1,8 +1,9 @@
 if (Meteor.isClient) {
   var adjustMargin = function() {
-    var fromTop = $(window).scrollTop();
-    if (fromTop < 100) {
-      $(".nav-options").attr('style', 'margin-top: ' + (100 - fromTop) + 'px');
+    var fromTop = $(window).scrollTop(),
+        headerHeight = 80;
+    if (fromTop < headerHeight) {
+      $(".nav-options").attr('style', 'margin-top: ' + (headerHeight - fromTop) + 'px');
     } else {
       $(".nav-options").attr('style', '');
     }

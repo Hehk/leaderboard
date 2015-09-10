@@ -1,11 +1,11 @@
 if (Meteor.isClient) {
   contentUtils = (function() {
     return {
-      findTileGroup : function (name) {
+      findTileGroup : function (id) {
         var content;
 
         TileGroupCollection.forEach(function (tileGroup) {
-          if (tileGroup.name === name) {
+          if (tileGroup.id === id) {
             content = tileGroup;
           }
         });
@@ -20,17 +20,18 @@ if (Meteor.isClient) {
           TileGroupCollection = [];
         }
         Blaze.renderWithData(Template.tileGroup, tileGroup, $('.content')[0]);
-        TileGroupCollection.push(new TileGroup(name, content));
+        TileGroupCollection.push(tileGroup);
         sidebar.push({
-          name : name,
-          options : typeof options === 'undefined' || options === true ? true : options
+          name : tileGroup.content.title(),
+          options : typeof options === 'undefined' || options === true ? true : options,
+          id : tileGroup.id
         });
         Session.set('sidebar', sidebar);
       },
-      removeTileGroup : function (name) {
+      removeTileGroup : function (id) {
         var tileGroup = null;
         for (var i = 0; i < TileGroupCollection.length; i++) {
-          if (TileGroupCollection[i].name === name) {
+          if (TileGroupCollection[i].id === id) {
             tileGroup = TileGroupCollection[i];
             break;
           }
@@ -38,15 +39,23 @@ if (Meteor.isClient) {
 
         if (tileGroup !== null) {
           var sidebar = Session.get('sidebar');
-          $('#' + name).remove();
+          $('#' + id).remove();
           TileGroupCollection.splice(i,1);
-          sidebar.splice(sidebar.indexOf(name), 1);
+          sidebar.splice(i, 1);
           Session.set('sidebar', sidebar);
+          tileGroup.destroy();
         }
       },
       // generates a unique ID
       generateID: function() {
         return '_' + Math.random().toString(36).substr(2, 9);
+      },
+      // tests if a name is valid
+      isValidName : function (name) {
+        return typeof name === 'string' &&
+          name.length !== 0 &&
+          name.match(/\W/) === null &&
+          Session.get('sidebar').indexOf(name) === -1;
       },
       // adjusts the scroll so the users stays in the same space
       adjustScroll: function(delta) {

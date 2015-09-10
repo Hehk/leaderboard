@@ -1,10 +1,9 @@
 if (Meteor.isClient) {
   Template.tileGroup.events({
-    'click .prev,.next' : function (event) {
-      var id = this.id(),
-          tileGroup = contentUtils.findTileGroup(id),
+    'click .prev,.next' : function (event, blaze) {
+      var tileGroup = blaze.data,
           settings = tileGroup.settings,
-          players = Session.get(id + '-players-filtered'),
+          players = Session.get(tileGroup.name + '-players-filtered'),
           moved = false;
 
       if (settings.offset + settings.length < players.length &&
@@ -18,7 +17,7 @@ if (Meteor.isClient) {
       }
 
       if (moved === true) {
-        Session.set(id + '-players-visible',
+        Session.set(tileGroup.name + '-players-visible',
           contentUtils.filterContent(
             players,
             settings.length,

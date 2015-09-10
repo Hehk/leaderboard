@@ -2,9 +2,10 @@
 @import 'client/lib/_dimensions.scss';
 
 .content {
-  padding-top: 100px;
+  padding-top: $header-height;
   margin-bottom: 100px;
-  position: absolute;
+  position: relative;
+  margin-right: $sidebar-width;
   top: 0;
   bottom: 0;
   right: 0;

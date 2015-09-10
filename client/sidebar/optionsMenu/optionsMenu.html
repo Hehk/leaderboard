@@ -1,0 +1,23 @@
+<template name="sidebar_optionsMenu">
+  <div class="overlay">
+    {{#with content}}
+    <div class="sidebar_options-menu">
+      <div class="title">
+        {{title}}'s Options
+      </div>
+      <div class="name">
+        <span>Name: </span>
+        <textarea wrap="off"></textarea>
+      </div>
+      <div class="height">
+        <span>Height: </span>
+        <textarea wrap="off" rows="1"></textarea>
+      </div>
+      <div class="buttons">
+        <div class="cancel">Cancel</div>
+        <div class="save">Save</div>
+      </div>
+    </div>
+    {{/with}}
+  </div>
+</template>

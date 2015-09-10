@@ -24,14 +24,23 @@ if (Meteor.isClient) {
   });
 
   Template.sidebar_button.events({
-    'click' : function (event) {
+    'click' : function (event, blaze) {
       if (event.target.classList.contains('fa-trash-o')) {
-        contentUtils.removeTileGroup(event.target.parentElement.parentElement.getAttribute('value'));
+        contentUtils.removeTileGroup(blaze.data.id);
       } else if (event.target.classList.contains('fa-cog')) {
-        console.log('cog');
+        var menu = $('.overlay');
+        if (menu.length === 0) {
+          Blaze.renderWithData(
+            Template.sidebar_optionsMenu,
+            contentUtils.findTileGroup(blaze.data.id),
+            $('.content')[0]
+          );
+        } else {
+          menu.remove();
+        }
       } else {
         $("html, body").animate({
-          scrollTop : $('#' + event.target.getAttribute('value')).position().top + 'px'
+          scrollTop : $('#' + blaze.data.id).position().top + 'px'
         }, 1000);
       }
     }

@@ -1,0 +1,83 @@
+@import 'client/lib/_colors.scss';
+@import 'client/lib/_dimensions.scss';
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: $sidebar-width;
+  right: 0;
+
+  background-color: rgba(100,100,100,0.5);
+}
+
+.sidebar_options-menu {
+  $height: 200px;
+  $width: 300px;
+
+  height: $height;
+  width: $width;
+
+  position: fixed;
+  z-index: 2;
+  left: 50%;
+  top: 50%;
+  margin-top: -1 * ($height / 2);
+  background-color: $primary-color-text;
+  box-shadow: $shadow;
+
+  padding: 10px;
+  font-size: 24px;
+  .title {
+    font-size: 32px;
+    color: $primary-color;
+    font-weight: bold;
+    border-bottom: 1px solid $divider-color;
+  }
+
+  .name, .height {
+    $height: 60px;
+    height: $height;
+    line-height: $height;
+    display: flex;
+
+    span {
+      width: 80px;
+    }
+
+    textarea {
+      border: none;
+      outline: none;
+      resize: none;
+
+      border-bottom: 2px solid $divider-color;
+      font-size: 24px;
+      font-family: 'Abel';
+      line-height: 36px;
+      margin: 10px 10px 15px 10px;
+      overflow: hidden;
+      flex-grow: 1;
+      white-space: normal;
+      text-align: justify;
+      -moz-text-align-last: center; /* Firefox 12+ */
+      text-align-last: center;
+    }
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: flex-end;
+
+    .cancel, .save {
+      margin-right: 10px;
+      background-color: $primary-color;
+      color: $primary-color-text;
+      box-shadow: $shadow;
+      padding: 0 10px 0 10px;
+
+      &:hover {
+        background-color: $primary-color-dark;
+      }
+    }
+  }
+}

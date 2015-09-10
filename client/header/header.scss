@@ -11,8 +11,8 @@
   height: $header-height;
   line-height: $header-height;
 
-  color: $primary-color-text;
-  background-color: $accent-color;
+  color: $primary-color;
+  background-color: $primary-color-text;
   box-shadow: $shadow;
 
   font-size: 42px;
@@ -27,11 +27,17 @@
     display: flex;
     justify-content: flex-end;
     font-size: 32px;
+    height: $header-height;
 
     a {
-      margin-right: 20px;
+      margin-right: 10px;
+      padding: 0 10px 0 10px;
       text-decoration: none;
-      color: $primary-color-text;
+      color: $accent-color;
+
+      &:hover {
+        border-bottom: 3px solid $accent-color;
+      }
     }
   }
 }
