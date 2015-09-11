@@ -80,7 +80,7 @@ TileGroup = function (name, players) {
 // sorts the tiles within based off an option passed in
 TileGroup.prototype.sort = function (option) {
   var sortFn = null,
-      targets = $('#' + this.name).find('.prefix').removeClass('selected');
+      targets = $('#' + this.id).find('.prefix').removeClass('selected');
 
   switch (option) {
     case 'rank':

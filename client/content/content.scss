@@ -116,11 +116,12 @@
       }
 
       .user-name {
+        color: $accent-color;
         width: 150px;
       }
 
       .char-name {
-        color: $accent-color;
+        color: $primary-color;
       }
     }
 
