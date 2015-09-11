@@ -33,10 +33,10 @@
       margin-right: 10px;
       padding: 0 10px 0 10px;
       text-decoration: none;
-      color: $accent-color;
+      color: $primary-text-color;
 
       &:hover {
-        border-bottom: 3px solid $accent-color;
+        border-bottom: 4px solid $accent-color;
       }
     }
   }
