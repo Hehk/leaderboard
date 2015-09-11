@@ -18,6 +18,7 @@ if (Meteor.isClient) {
           tileGroup = blaze.data;
 
       if (!isNaN(newHeight) && newHeight > 0 && newHeight <= 100) {
+        tileGroup.settings.offset = 0;
         tileGroup.settings.length = newHeight;
       }
 
