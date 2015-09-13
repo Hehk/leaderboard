@@ -24,7 +24,7 @@ function retrieveTimelineSettings (/* id */) {
 if (Meteor.isClient) {
   var renderTimeline = function (target, id) {
     var m = [20, 20, 20, 80]; // margins
-    var w = 1000 - m[1] - m[3]; // width
+    var w = target.node().getBoundingClientRect().width - m[1] - m[3]; // width
     var h = 300 - m[0] - m[2]; // height
 
     // retrieves the settings data for the timeline
@@ -109,6 +109,10 @@ if (Meteor.isClient) {
 
       tileGroup.sort(event.target.getAttribute('value'));
       tileGroup.settings.offset = 0;
+      event.stopPropagation();
+    },
+    'click .add-button' : function (event) {
+      console.log('sdfs');
       event.stopPropagation();
     }
   });
