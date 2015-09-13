@@ -109,6 +109,10 @@
         color: $primary-color-text;
         background-color: $primary-color;
       }
+
+      .name > .user-name {
+        font-weight: bold;
+      }
     }
 
     .name {
