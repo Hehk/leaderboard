@@ -72,6 +72,8 @@
 
     &:hover {
       border-left: 2px $primary-color solid;
+      background-color: $primary-color-text;
+      box-shadow: $shadow-small;
 
       .name > .add-button {
         padding: 0 20px 0 20px;
@@ -93,7 +95,6 @@
     }
 
     &.selected {
-      margin: 20px 40px 20px 40px;
       border-bottom: none;
       border-left: 2px solid $primary-color;
 
