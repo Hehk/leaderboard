@@ -81,6 +81,9 @@
           background-color: $primary-color-light;
         }
       }
+      .name > .test {
+        color: $primary-text-color;
+      }
     }
 
     &:last-child {
@@ -108,8 +111,14 @@
     .name {
       .user-name,
       .char-name,
-      .add-button {
+      .add-button,
+      .test {
         float: left;
+      }
+
+      .test {
+        line-height: 50px;
+        color: transparent;
       }
       .add-button {
         width: 0px;
@@ -127,6 +136,7 @@
 
       .char-name {
         color: $primary-color;
+        margin-right: 20px;
       }
     }
 
