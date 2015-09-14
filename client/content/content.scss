@@ -69,24 +69,21 @@
     font-size: 18px;
     border-bottom: 1px solid $divider-color;
     border-left: 2px transparent solid;
+    border-right: 2px transparent solid;
+    transition: border 0.25s, background-color 0.25s;
 
     &:hover {
       border-left: 2px $primary-color solid;
+      border-right: 2px $primary-color solid;
       background-color: $primary-color-text;
       box-shadow: $shadow-small;
 
-      .name > .add-button {
-        padding: 0 20px 0 20px;
-        width: auto;
-        color: $primary-color-text;
-        background-color: $primary-color;
-
-        &:active {
-          background-color: $primary-color-light;
+      .tile-menu {
+        .add-button,.remove-button {
+          padding: 0 0 0 20px;
+          width: auto;
+          color: $accent-color;
         }
-      }
-      .name > .test {
-        color: $primary-text-color;
       }
     }
 
@@ -97,29 +94,37 @@
     &.selected {
       border-bottom: none;
       border-left: 2px solid $primary-color;
+      background-color: $primary-color-text;
+      box-shadow: $shadow-small;
+
+      .tile-menu {
+        .add-button,.remove-button {
+          padding: 0 0 0 20px;
+          width: auto;
+          color: $accent-color;
+        }
+      }
 
       /* first-child does not work :( */
       &.first {
         margin-top: 0;
       }
+    }
 
-      .name > .add-button {
-        padding: 0 20px 0 20px;
-        width: auto;
-        color: $primary-color-text;
-        background-color: $primary-color;
-      }
+    .tile-menu {
+      float: left;
 
-      .name > .user-name {
-        font-weight: bold;
+      .add-button,.remove-button {
+        line-height: 50px;
+        color: transparent;
+        width: 0;
+        transition: width 0.25s, color 0.25s, padding 0.25s;
       }
     }
 
     .name {
       .user-name,
-      .char-name,
-      .add-button,
-      .test {
+      .char-name {
         float: left;
       }
 
