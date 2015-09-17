@@ -107,8 +107,8 @@ if (Meteor.isClient) {
           .getAttribute('id')
         );
 
-      tileGroup.sort(event.target.getAttribute('value'));
       tileGroup.settings.offset = 0;
+      tileGroup.sort(event.target.getAttribute('value'));
       event.stopPropagation();
     },
     'click .add-button' : function (event) {

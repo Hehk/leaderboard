@@ -81,6 +81,7 @@ TileGroup = function (name, players) {
 TileGroup.prototype.sort = function (option) {
   var sortFn = null,
       targets = $('#' + this.id).find('.prefix').removeClass('selected');
+  this.update();
 
   switch (option) {
     case 'rank':
@@ -129,11 +130,7 @@ TileGroup.prototype.sort = function (option) {
   if (sortFn !== null) {
     var players = Session.get(this.name + '-players-filtered');
     Session.set(this.name + '-players-filtered', players.sort(sortFn));
-    Session.set(this.name + '-players-visible',
-      contentUtils.filterContent(
-        players,
-        this.settings.length
-      ));
+    this.reset();
   }
 };
 
@@ -150,13 +147,18 @@ TileGroup.prototype.filter = function (term) {
     }
   }
 
-  this.settings.offset = 0;
   Session.set(this.name + '-players-filtered', filteredContent);
+  this.reset();
+};
+
+TileGroup.prototype.reset = function () {
+  this.settings.offset = 0;
   Session.set(this.name + '-players-visible', contentUtils.filterContent(
-    filteredContent,
+    Session.get(this.name + '-players-filtered'),
     this.settings.length,
     this.settings.offset
   ));
+
 };
 
 // updates the next and prev be on or off based on the user position
