@@ -1,6 +1,6 @@
 # leaderboard
 
-This is an app designed to replace the default leaderboard for guild wars 2. IT IS STILL IN DEVELOPMENT.
+This is an app designed to replace the default leaderboard for guild wars 2. **IT IS STILL IN DEVELOPMENT.**
 
 I try to update the deployment as much as possible at: http://gw2leaderboard.meteor.com
 
